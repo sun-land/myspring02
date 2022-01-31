@@ -19,14 +19,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    // 해당 게시글의 댓글 조회하기
+    // 해당 게시글의 댓글 저장하기
     @PostMapping("/posts/{postId}/comments")
     public Comment createComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
         Comment comment = commentService.createComment(commentRequestDto,postId);
         return comment;
     }
 
-    // 해당 게시글에 댓글 저장하기
+    // 해당 게시글에 댓글 조회하기
     @GetMapping("/posts/{postId}/comments")
     public List<Comment> getAllComment(@PathVariable Long postId) {
         return commentService.getAllComment(postId);

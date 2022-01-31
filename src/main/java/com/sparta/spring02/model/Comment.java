@@ -23,7 +23,7 @@ public class Comment {
     @Column(nullable = false)
     private String contents;
 
-    // postId까지 받아오는 생성자
+    // 생성자
     public Comment(CommentRequestDto commentRequestDto,Long postId) {
         this.postId = postId;
         this.contents = commentRequestDto.getContents();

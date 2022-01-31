@@ -23,9 +23,14 @@ public class PageController {
         return "signup";
     }
 
-//    @GetMapping("/posts/detail")
-//    public String getDetailPage(Model model, @PathVariable Long id) {
-//        model.addAttribute("postId",id);
-//        return "detail";
-//    }
+    @GetMapping("/posts/{postId}/detail")
+    public String getDetailPage(Model model, @PathVariable Long postId) {
+        model.addAttribute("postId",postId);
+        return "detail";
+    }
+
+    @GetMapping("/posting")
+    public String writePage() {
+        return "write";
+    }
 }
