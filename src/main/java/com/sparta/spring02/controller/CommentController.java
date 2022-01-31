@@ -37,4 +37,10 @@ public class CommentController {
     public Long deleteComment(@PathVariable Long commentId) {
         return commentService.deleteComment(commentId);
     }
+
+    // 댓글 수정하기
+    @PutMapping("/comments/{commentId}")
+    public Long updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
+        return commentService.updateComment(commentId, commentRequestDto);
+    }
 }

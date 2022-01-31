@@ -6,6 +6,7 @@ import com.sparta.spring02.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -33,6 +34,13 @@ public class CommentService {
     // 댓글 삭제하기
     public Long deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
+        return commentId;
+    }
+
+    @Transactional
+    public Long updateComment(Long commentId, CommentRequestDto commentRequestDto) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()->new IllegalArgumentException("해당 댓글을 찾을 수 없습니다."));
+        comment.update(commentRequestDto);
         return commentId;
     }
 }

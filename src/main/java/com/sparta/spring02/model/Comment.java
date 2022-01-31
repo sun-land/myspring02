@@ -28,8 +28,9 @@ public class Comment {
         this.postId = postId;
         this.contents = commentRequestDto.getContents();
     }
-    // 임시로 만든 postId없는 생성자
-//    public Comment(CommentRequestDto commentRequestDto) {
-//        this.contents = commentRequestDto.getContents();
-//    }
+
+    // 수정하기
+    public void update(CommentRequestDto commentRequestDto) {
+        this.contents = commentRequestDto.getContents();
+    }
 }
