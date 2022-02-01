@@ -52,7 +52,11 @@
                                 <p>작성자 : ${postUsername}</p>
                                 <p>작성일 : ${createdAt}</p>
                                 <p>${contents}</p>`;
+                let temp_button = '<button onClick="deletePost()">글 삭제하기</button>'
                 $('#post-area').append(temp_html);
+                if (loginUsername === postUsername) {
+                    $('#button-area').append(temp_button);
+                }
             }
         })
     }
@@ -66,19 +70,23 @@
             success: function (response) {
                 // 2. 게시글리스트의 각 게시글을 HTML로 붙인다.
                 for (let i=0;i<response.length;i++) {
+                    let username = response[i]['username'];
                     let commentId = response[i]['commentId'];
                     let contents = response[i]['contents'];
                     // 1) HTML 태그를 만든다.
                     // 테이블의 각 행을 onclick하면 getOnePost(해당게시글아이디)함수가 실행되도록 설정
-                    let temp_html = `<div>
-                                        <p id="${commentId}-contents">${contents}</p>
+                    let temp_html = `<p id="${commentId}-contents">${contents}</p>`;
+                    let edit_html = `<div>
                                         <button id="${commentId}-deleteButton" onclick="deleteComment(${commentId})">댓글 삭제하기</button>
                                         <button id="${commentId}-showEditButton" onclick="showEdit(${commentId})">댓글 수정하기</button>
                                         <textarea class="hide" id="${commentId}-editInput" rows="2">${contents}</textarea>
                                         <button class="hide" id="${commentId}-updateButton" onclick="updateComment(${commentId})">수정완료</button>
-                                     </div>`;
+                                    </div>`
                     // 2) #post-body에 HTML을 붙인다.
                     $('#comment-area').append(temp_html);
+                    if (loginUsername === username) {
+                        $('#comment-area').append(edit_html);
+                    }
                 }
             }
         })
@@ -87,6 +95,10 @@
     // 글 삭제하기
     function deletePost() {
         // DELETE 요청으로 메모를 삭제한다.
+        let deleteCheck = confirm("정말로 삭제하시겠습니까?");
+        if (!deleteCheck) {
+            return;
+        }
         $.ajax({
             type: "DELETE",
             // url 주소를 백틱``에 담아 파리미터로 받은 id 값이 들어가도록 설정
@@ -96,6 +108,16 @@
                 window.location.href="/";
             }
         })
+    }
+
+    // 댓글 작성버튼 누르면 비회원은 로그인페이지로 보내기
+    function userCheck() {
+        if (!loginUsername) {
+            alert("로그인이 필요한 기능입니다")
+            window.location.href="/user/login"
+        } else {
+            saveComment();
+        }
     }
 
     // 댓글 작성하기
@@ -130,6 +152,10 @@
 
     // 댓글 삭제하기
     function deleteComment(commentId) {
+        let deleteCheck = confirm("정말로 삭제하시겠습니까?");
+        if (!deleteCheck) {
+            return;
+        }
         // DELETE 요청으로 메모를 삭제한다.
         $.ajax({
             type: "DELETE",
@@ -195,7 +221,6 @@
     }
 </style>
 <body>
-<span th:text="${postId}"></span>의 상세페이지
 <button onclick="location.href='/'">홈으로</button>
     <!--        글영역     -->
     <div class="post">
@@ -203,13 +228,12 @@
         <div id="post-area">
         </div>
         <div id="button-area">
-            <button onclick="deletePost()">글 삭제하기</button>
         </div>
         <!--        댓글작성영역      -->
         <div>
-            <p>댓글작성하기</p>
+            <p>댓글</p>
             <textarea id="input-comment" rows="2"></textarea>
-            <button onclick="saveComment()">댓글 작성하기</button>
+            <button onclick="userCheck()">댓글 작성하기</button>
         </div>
         <!--        댓글영역        -->
         <div id="comment-area">

@@ -24,6 +24,8 @@ public class UserService {
     public void registerUser(SignupRequestDto requestDto) {
 
         String username = requestDto.getUsername();
+        String pwd = requestDto.getPassword();
+        String repwd = requestDto.getRepassword();
 
         // 1. 회원 ID 중복 확인
         Optional<User> found = userRepository.findByUsername(username);
@@ -31,12 +33,16 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
         }
 
-        // 2. 패스워드 암호화
+//        // 2. 비밀번호 재입력 일치하는지
+//        if (!pwd.equals(repwd)) {
+//            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+//        }
+
+        // 3. 패스워드 암호화
         String password = passwordEncoder.encode(requestDto.getPassword());
 
-        String email = requestDto.getEmail();
 
-        User user = new User(username, password, email);
+        User user = new User(username, password);
         userRepository.save(user);
     }
 }

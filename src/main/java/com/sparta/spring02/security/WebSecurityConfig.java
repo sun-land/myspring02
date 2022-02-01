@@ -51,6 +51,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**").permitAll()
                 // 회원 관리 처리 API 전부를 login 없이 허용
                 .antMatchers("/user/**").permitAll()
+                // 인덱스 페이지 가능
+                .antMatchers("/").permitAll()
+                // 전체조회 API 가능 (근데 이거 POST면 게시글 저장도 되는데 어떡하지?)
+                .antMatchers("/api/posts").permitAll()
+                // 상세페이지 이동 가능
+                .antMatchers("/posts/**/detail").permitAll()
+                // 상세페이지 게시글 조회 API 가능(근데 이거 POST면 게시글 삭제도 되는데 어떻게 해야하지)
+                .antMatchers("/api/posts/**").permitAll()
+                // 상세페이지 게시글 조회 API 가능(근데 이거 POST면 댓글 저장도 되는데 어떡하지)
+                .antMatchers("/api/posts/**/comments").permitAll()
                 // 어떤 요청이든 '인증' 해라
                 .anyRequest().authenticated()
                 .and()
@@ -71,6 +81,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     // 로그아웃 처리 URL (원래 GET으로 설정을 했었는데 POST로 해야한다 뭔소리래? 2주차 9강)
                     // (CSRF protection 을 disable 하면 GET /user/logout 으로도 사용 가능이라던데??)
                     .logoutUrl("/user/logout")
+                    // 로그아웃 성공 후 화면
+                    .logoutSuccessUrl("/")
                     .permitAll();
     }
 }

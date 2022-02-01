@@ -13,8 +13,10 @@ public class PageController {
     @GetMapping("/")
     public String getAllPostPage(Model model,@AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        // userdetails에서 username 가져옴
-        model.addAttribute("loginUsername",userDetails.getUsername());
+        // userdetails가 null이 아니면(로그인된 사람이면) username 가져옴
+        if (userDetails != null) {
+            model.addAttribute("loginUsername",userDetails.getUsername());
+        }
         return "index";
     }
 
@@ -31,7 +33,10 @@ public class PageController {
     @GetMapping("/posts/{postId}/detail")
     public String getDetailPage(Model model, @PathVariable Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         model.addAttribute("postId",postId);
-        model.addAttribute("loginUsername",userDetails.getUsername());
+        // userdetails가 null이 아니면(로그인된 사람이면) username 가져옴
+        if (userDetails != null) {
+            model.addAttribute("loginUsername",userDetails.getUsername());
+        }
         return "detail";
     }
 
