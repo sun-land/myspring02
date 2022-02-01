@@ -34,7 +34,7 @@
                     for (let i=0;i<response.length;i++) {
                         let postId = response[i]['postId'];
                         let title = response[i]['title'];
-                        let username = "고혜지";
+                        let username = response[i]['username']
                         let createdAt = response[i]['createdAt'];
                         // 1) HTML 태그를 만든다.
                         // 테이블의 각 행을 onclick하면 getOnePost(해당게시글아이디)함수가 실행되도록 설정
@@ -58,7 +58,7 @@
 </head>
 <body>
 <h1>항해99 블로그</h1>
-<h2><span th:text="${username}"></span>님의 이야기를 들려주세요!</h2>
+<h2><span th:text="${loginUsername}"></span>님의 이야기를 들려주세요!</h2>
 <button onclick="location.href='/user/login'">로그인페이지로 이동</button>
 <button onclick="location.href='/write'">글 작성하기</button>
 <form id="my_form" method="post" action="/user/logout">

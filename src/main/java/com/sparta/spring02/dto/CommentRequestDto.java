@@ -14,5 +14,6 @@ import javax.persistence.Id;
 @Getter
 public class CommentRequestDto {
 
+    private String username;
     private String contents;
 }

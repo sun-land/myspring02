@@ -17,40 +17,46 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 
-    <script>
-    // 글 저장하기
-    function savePost() {
-        // 1. 작성한 게시글 내용을 불러온다.
-        let title = $('#input-title').val();
-        let contents = $('#input-contents').val();
+    <script th:inline="javascript">
 
-        // 2. 작성한 게시글이 올바른지 확인한다.
-        if (title == "") {
-            alert("제목을 입력해주세요")
-            return;
-        } else if (contents == "") {
-            alert("내용을 입력해주세요")
-            return;
-        } else if (contents.trim().length >255) {
-            alert("내용은 255자까지만 입력가능합니다.")
-            return;
-        }
+        // username 받아오기
+        /*<![CDATA[*/
+        let loginUsername = [[${loginUsername}]];
+        /*]]*/
 
-        // 3. 전달할 데이터를 JSON 형식으로 만든다.
-        let data = {'title':title, 'contents':contents};
+        // 글 저장하기
+        function savePost() {
+            // 1. 작성한 게시글 내용을 불러온다.
+            let title = $('#input-title').val();
+            let contents = $('#input-contents').val();
 
-        // 4. POST 요청으로 서버에 데이터를 전달한다.
-        $.ajax({
-            type: "POST",
-            url: "/api/posts",
-            contentType: "application/json", // JSON 형식으로 전달함을 알리기
-            data: JSON.stringify(data), // 기본적으로 문자열로만 주고받을 수 있다.
-            success: function (response) {
-                alert('작성글이 게시되었습니다');
-                window.location.href='/'; // 새로고침
+            // 2. 작성한 게시글이 올바른지 확인한다.
+            if (title == "") {
+                alert("제목을 입력해주세요")
+                return;
+            } else if (contents == "") {
+                alert("내용을 입력해주세요")
+                return;
+            } else if (contents.trim().length >255) {
+                alert("내용은 255자까지만 입력가능합니다.")
+                return;
             }
-        });
-    }
+
+            // 3. 전달할 데이터를 JSON 형식으로 만든다.
+            let data = {'username':loginUsername, 'title':title, 'contents':contents};
+
+            // 4. POST 요청으로 서버에 데이터를 전달한다.
+            $.ajax({
+                type: "POST",
+                url: "/api/posts",
+                contentType: "application/json", // JSON 형식으로 전달함을 알리기
+                data: JSON.stringify(data), // 기본적으로 문자열로만 주고받을 수 있다.
+                success: function (response) {
+                    alert('작성글이 게시되었습니다');
+                    window.location.href='/'; // 새로고침
+                }
+            });
+        }
     </script>
     <style>
 

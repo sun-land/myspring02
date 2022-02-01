@@ -17,8 +17,8 @@ public class Comment {
     @Column(nullable = false)
     private Long postId;
 
-//    @Column(nullable = false)
-//    private String username;
+    @Column(nullable = false)
+    private String username;
 
     @Column(nullable = false)
     private String contents;
@@ -27,6 +27,7 @@ public class Comment {
     public Comment(CommentRequestDto commentRequestDto,Long postId) {
         this.postId = postId;
         this.contents = commentRequestDto.getContents();
+        this.username = commentRequestDto.getUsername();
     }
 
     // 수정하기
