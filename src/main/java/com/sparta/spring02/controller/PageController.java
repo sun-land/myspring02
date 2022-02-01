@@ -29,7 +29,7 @@ public class PageController {
         return "detail";
     }
 
-    @GetMapping("/posting")
+    @GetMapping("/write")
     public String writePage() {
         return "write";
     }

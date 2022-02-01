@@ -42,7 +42,7 @@
         // 4. POST 요청으로 서버에 데이터를 전달한다.
         $.ajax({
             type: "POST",
-            url: "/posts",
+            url: "/api/posts",
             contentType: "application/json", // JSON 형식으로 전달함을 알리기
             data: JSON.stringify(data), // 기본적으로 문자열로만 주고받을 수 있다.
             success: function (response) {

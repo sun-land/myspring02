@@ -36,7 +36,7 @@
         $.ajax({
             // 1. GET API를 사용해 게시글 리스트 받아온다.
             type: 'GET',
-            url: `/posts/${postId}`,
+            url: `/api/posts/${postId}`,
             success: function (response) {
                 // 2. 게시글리스트의 각 게시글을 HTML로 붙인다.
                 let title = response['title'];
@@ -56,7 +56,7 @@
         $.ajax({
             // 1. GET API를 사용해 게시글 리스트 받아온다.
             type: 'GET',
-            url: `/posts/${postId}/comments`,
+            url: `/api/posts/${postId}/comments`,
             success: function (response) {
                 // 2. 게시글리스트의 각 게시글을 HTML로 붙인다.
                 for (let i=0;i<response.length;i++) {
@@ -84,7 +84,7 @@
         $.ajax({
             type: "DELETE",
             // url 주소를 백틱``에 담아 파리미터로 받은 id 값이 들어가도록 설정
-            url: `/posts/${postId}`,
+            url: `/api/posts/${postId}`,
             success: function (response) {
                 alert('삭제 완료!');
                 window.location.href="/";
@@ -112,7 +112,7 @@
         // 4. POST 요청으로 서버에 데이터를 전달한다.
         $.ajax({
             type: "POST",
-            url: `/posts/${postId}/comments`,
+            url: `/api/posts/${postId}/comments`,
             contentType: "application/json", // JSON 형식으로 전달함을 알리기
             data: JSON.stringify(data), // 기본적으로 문자열로만 주고받을 수 있다.
             success: function (response) {
@@ -128,7 +128,7 @@
         $.ajax({
             type: "DELETE",
             // url 주소를 백틱``에 담아 파리미터로 받은 id 값이 들어가도록 설정
-            url: `/comments/${commentId}`,
+            url: `/api/comments/${commentId}`,
             success: function (response) {
                 alert('삭제 완료!');
                 window.location.reload();
@@ -165,7 +165,7 @@
         // 4. POST 요청으로 서버에 데이터를 전달한다.
         $.ajax({
             type: "PUT",
-            url: `/comments/${commentId}`,
+            url: `/api/comments/${commentId}`,
             contentType: "application/json", // JSON 형식으로 전달함을 알리기
             data: JSON.stringify(data), // 기본적으로 문자열로만 주고받을 수 있다.
             success: function (response) {

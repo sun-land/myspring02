@@ -28,7 +28,7 @@
             $.ajax({
                 // 1. GET API를 사용해 게시글 리스트 받아온다.
                 type: 'GET',
-                url: '/posts',
+                url: '/api/posts',
                 success: function (response) {
                     // 2. 게시글리스트의 각 게시글을 HTML로 붙인다.
                     for (let i=0;i<response.length;i++) {
@@ -59,7 +59,7 @@
 <body>
 여기는 홈
 <button onclick="location.href='/user/login'">로그인페이지로 이동</button>
-<button onclick="location.href='/posting'">글 작성하기</button>
+<button onclick="location.href='/write'">글 작성하기</button>
     <!--        게시글 테이블     -->
     <table class="table">
         <!--    테이블 열이름   -->

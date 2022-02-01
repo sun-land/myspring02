@@ -20,26 +20,26 @@ public class CommentController {
     }
 
     // 해당 게시글의 댓글 저장하기
-    @PostMapping("/posts/{postId}/comments")
+    @PostMapping("/api/posts/{postId}/comments")
     public Comment createComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
         Comment comment = commentService.createComment(commentRequestDto,postId);
         return comment;
     }
 
     // 해당 게시글에 댓글 조회하기
-    @GetMapping("/posts/{postId}/comments")
+    @GetMapping("/api/posts/{postId}/comments")
     public List<Comment> getAllComment(@PathVariable Long postId) {
         return commentService.getAllComment(postId);
     }
 
     // 댓글 삭제하기
-    @DeleteMapping("/comments/{commentId}")
+    @DeleteMapping("/api/comments/{commentId}")
     public Long deleteComment(@PathVariable Long commentId) {
         return commentService.deleteComment(commentId);
     }
 
     // 댓글 수정하기
-    @PutMapping("/comments/{commentId}")
+    @PutMapping("/api/comments/{commentId}")
     public Long updateComment(@PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
         return commentService.updateComment(commentId, commentRequestDto);
     }
