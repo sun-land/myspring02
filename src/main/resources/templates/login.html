@@ -10,6 +10,27 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <meta charset="UTF-8">
     <title>로그인 페이지</title>
+    <!--     제이쿼리      -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:inline="javascript">
+        // username 받아오기
+        /*<![CDATA[*/
+        let loginUsername = [[${loginUsername}]];
+        /*]]*/
+
+        // 페이지 로드되자마자 실행
+        $(document).ready(function () {
+            userCheck();
+        })
+
+        function userCheck() {
+            if (loginUsername != null) {
+                alert("이미 로그인이 되어있습니다.");
+                window.location.href="/";
+            }
+        }
+
+    </script>
 </head>
 <body>
 <div id="login-form">

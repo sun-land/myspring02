@@ -21,12 +21,18 @@ public class PageController {
     }
 
     @GetMapping("/user/login")
-    public String loginPage() {
+    public String loginPage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails != null) {
+            model.addAttribute("loginUsername",userDetails.getUsername());
+        }
         return "login";
     }
 
     @GetMapping("/user/signup")
-    public String signupPage() {
+    public String signupPage(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails != null) {
+            model.addAttribute("loginUsername",userDetails.getUsername());
+        }
         return "signup";
     }
 
