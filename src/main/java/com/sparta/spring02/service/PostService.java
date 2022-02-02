@@ -19,7 +19,7 @@ public class PostService {
 
     // 모든 게시글 조회하기
     public List<Post> allPosts() {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtDesc();
     }
 
     // 게시글 작성하기

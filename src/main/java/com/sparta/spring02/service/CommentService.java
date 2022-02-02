@@ -21,7 +21,7 @@ public class CommentService {
 
     // 해당 게시글의 댓글 조회하기
     public List<Comment> getAllComment(Long postId) {
-        return commentRepository.findByPostId(postId);
+        return commentRepository.findByPostIdOrderByCreatedAtDesc(postId);
     }
 
     // 해당 게시글에 댓글 저장하기
