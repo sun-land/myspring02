@@ -24,6 +24,7 @@ public class UserController {
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
     public String registerUser(@Valid SignupRequestDto requestDto, Errors errors, Model model) {
+        // 아이디와 패스워드의 유효성 검사
         if (errors.hasErrors()) {
             // 회원가입 실패시, 입력 데이터를 유지
             model.addAttribute("requestDto", requestDto);
@@ -35,9 +36,16 @@ public class UserController {
             }
             return "signup";
         }
-        userService.registerUser(requestDto);
-        return "redirect:/user/login";
 
+        // 아이디와 비밀번호 조건 체크
+        String check = userService.idPasswordCheck(requestDto);
+        if (!check.equals("ok")) {
+            model.addAttribute("errorMessage",check);
+            return "signup";
+        } else {
+            userService.registerUser(requestDto);
+            return "redirect:/user/login";
+        }
     }
 
 

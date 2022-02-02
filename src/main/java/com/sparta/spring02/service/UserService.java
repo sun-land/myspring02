@@ -35,29 +35,32 @@ public class UserService {
         return validatorResult;
     }
 
+    // 회원가입 시, 아이디 패스워드 조건 체크
+    public String idPasswordCheck(SignupRequestDto signupRequestDto) {
+        String username = signupRequestDto.getUsername();
+        String pwd = signupRequestDto.getPassword();
+        String repwd = signupRequestDto.getRepassword();
+        Optional<User> found = userRepository.findByUsername(username);
+
+        if (found.isPresent()) {
+            return "이미 가입된 아이디입니다";
+        } else if (!pwd.equals(repwd)) {
+            return "비밀번호가 일치하지 않습니다";
+        } else if (pwd.contains(username)) {
+            return "비밀번호에는 아이디를 포함할 수 없습니다";
+        } else {
+            return "ok";
+        }
+    }
 
 
     // 회원가입하기
     public void registerUser(SignupRequestDto requestDto) {
 
         String username = requestDto.getUsername();
-        String pwd = requestDto.getPassword();
-        String repwd = requestDto.getRepassword();
 
-        // 1. 회원 ID 중복 확인
-        Optional<User> found = userRepository.findByUsername(username);
-        if (found.isPresent()) { // 아이디 찾아봤는데 디비에 있으면
-            throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
-        }
-
-        // 2. 비밀번호 재입력 일치하는지
-        if (!pwd.equals(repwd)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-
-        // 3. 패스워드 암호화
+        // 패스워드 암호화
         String password = passwordEncoder.encode(requestDto.getPassword());
-
 
         User user = new User(username, password);
         userRepository.save(user);
