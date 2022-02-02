@@ -32,8 +32,18 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
+    private Long kakaoId;
+
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public User(String username, String password, String email, Long kakaoId) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.kakaoId = kakaoId;
     }
 }
