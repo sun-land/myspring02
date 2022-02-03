@@ -2,9 +2,7 @@ package com.sparta.spring02.controller;
 
 import com.sparta.spring02.dto.CommentRequestDto;
 import com.sparta.spring02.model.Comment;
-import com.sparta.spring02.model.Post;
 import com.sparta.spring02.service.CommentService;
-import com.sparta.spring02.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
