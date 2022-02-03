@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -29,30 +32,21 @@ public class UserController {
 
     // 회원 가입 요청 처리
     @PostMapping("/user/signup")
-    public String registerUser(@Valid SignupRequestDto requestDto, Errors errors, Model model) {
-        // 아이디와 패스워드의 유효성 검사
-        if (errors.hasErrors()) {
-            // 회원가입 실패시, 입력 데이터를 유지
-            // model.addAttribute("requestDto", requestDto);
+    public String registerUser(SignupRequestDto requestDto, Model model) {
 
-            // 유효성 통과 못한 필드와 메시지를 핸들링
-            Map<String, String> validatorResult = userService.validateHandling(errors);
-            for (String key : validatorResult.keySet()) {
-                model.addAttribute(key, validatorResult.get(key));
-            }
-            return "signup";
-        }
-
-        // 아이디와 비밀번호 조건 체크
+        // 아이디, 비밀번호 체크
         String check = userService.idPasswordCheck(requestDto);
+
+        // 문제 있으면 메세지와 함께 회원가입 페이지로, 문제 없으면 저장
         if (!check.equals("ok")) {
-            model.addAttribute("errorMessage",check);
+            model.addAttribute("errorMessage", check);
             return "signup";
         } else {
-            // 문제 없으면 회원정보 저장
             userService.registerUser(requestDto);
             return "redirect:/user/login";
         }
+
+
     }
 
     // 카카오로그인

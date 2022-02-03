@@ -25,6 +25,28 @@ class UserServiceTest {
     PasswordEncoder passwordEncoder;
 
     @Test
+    @DisplayName("정상케이스")
+    void serviceNormal() {
+        // given
+        String username = "sparta";
+        String password = "1234";
+        String repassword = "1234";
+
+
+        SignupRequestDto signupRequestDto = new SignupRequestDto(username, password, repassword);
+
+        UserService userService = new UserService(userRepository,passwordEncoder);
+        when(userRepository.findByUsername(username))
+                .thenReturn(Optional.empty());
+
+        // when
+        String result = userService.idPasswordCheck(signupRequestDto);
+
+        // then
+        assertEquals("ok",result);
+    }
+
+    @Test
     @DisplayName("아이디 중복 체크1")
     void idDuplication1() {
         // given

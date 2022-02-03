@@ -19,18 +19,18 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {
-//
-//    @Mock
-//    UserService userService;
-//
-//    @Mock
-//    KakaoUserService kakaoUserService;
-//
-//    @Mock
-//    Model model;
-//
-//    @Mock
-//    Errors errors;
+
+    @Mock
+    UserService userService;
+
+    @Mock
+    KakaoUserService kakaoUserService;
+
+    @Mock
+    Model model;
+
+    @Mock
+    Errors errors;
 //
 //    @Test
 //    @DisplayName("망했어 이거 아니야ㅠㅠㅠㅠㅠ")

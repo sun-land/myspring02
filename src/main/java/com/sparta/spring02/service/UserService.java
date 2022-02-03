@@ -24,6 +24,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserService {
@@ -54,15 +56,29 @@ public class UserService {
         String repwd = signupRequestDto.getRepassword();
         Optional<User> found = userRepository.findByUsername(username);
 
-        if (found.isPresent()) {
-            return "이미 가입된 아이디입니다";
+        // 아이디 정규식
+        Pattern idPattern = Pattern.compile("^[0-9a-zA-Z]*$");
+        Matcher idMatcher = idPattern.matcher(username);
+
+        // 비밀번호 정규식
+        Pattern pwPattern = Pattern.compile("^[\\S]*$");
+        Matcher pwMatcher = pwPattern.matcher(pwd);
+
+        // 유효성 검사
+        if (!idMatcher.matches() || username.length()<3) {
+            return "아이디는 숫자와 영문자만 사용하여 3자 이상 입력해주세요";
+        } else if (!pwMatcher.matches() || pwd.length()<4) {
+            return "비밀번호는 공백을 제외하고 4자 이상 입력해주세요";
         } else if (!pwd.equals(repwd)) {
             return "비밀번호가 일치하지 않습니다";
-        } else if (pwd.contains(username)) {
+        } else if (found.isPresent()) {
+            return "이미 가입된 아이디입니다";
+        }  else if (pwd.contains(username)) {
             return "비밀번호에는 아이디를 포함할 수 없습니다";
         } else {
-            return "ok";
+          return "ok";
         }
+
     }
 
 
@@ -77,6 +93,5 @@ public class UserService {
         User user = new User(username, password);
         userRepository.save(user);
     }
-
 
 }
