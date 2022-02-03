@@ -182,4 +182,92 @@ class UserServiceTest {
         assertEquals("비밀번호에는 아이디를 포함할 수 없습니다",result);
     }
 
+    @Test
+    @DisplayName("아이디 3자 미만")
+    void idValid1() {
+        // given
+        String username = "a0";
+        String password = "1234";
+        String repassword = "1234";
+
+
+        SignupRequestDto signupRequestDto = new SignupRequestDto(username, password, repassword);
+
+        UserService userService = new UserService(userRepository,passwordEncoder);
+        when(userRepository.findByUsername(username))
+                .thenReturn(Optional.empty());
+
+        // when
+        String result = userService.idPasswordCheck(signupRequestDto);
+
+        // then
+        assertEquals("아이디는 숫자와 영문자만 사용하여 3자 이상 입력해주세요",result);
+    }
+
+    @Test
+    @DisplayName("아이디 숫자, 영문자 외의 문자")
+    void idValid2() {
+        // given
+        String username = "abcd!";
+        String password = "1234";
+        String repassword = "1234";
+
+
+        SignupRequestDto signupRequestDto = new SignupRequestDto(username, password, repassword);
+
+        UserService userService = new UserService(userRepository,passwordEncoder);
+        when(userRepository.findByUsername(username))
+                .thenReturn(Optional.empty());
+
+        // when
+        String result = userService.idPasswordCheck(signupRequestDto);
+
+        // then
+        assertEquals("아이디는 숫자와 영문자만 사용하여 3자 이상 입력해주세요",result);
+    }
+
+    @Test
+    @DisplayName("비밀번호 4자 미만")
+    void pwdValid1() {
+        // given
+        String username = "sparta";
+        String password = "1";
+        String repassword = "1";
+
+
+        SignupRequestDto signupRequestDto = new SignupRequestDto(username, password, repassword);
+
+        UserService userService = new UserService(userRepository,passwordEncoder);
+        when(userRepository.findByUsername(username))
+                .thenReturn(Optional.empty());
+
+        // when
+        String result = userService.idPasswordCheck(signupRequestDto);
+
+        // then
+        assertEquals("비밀번호는 공백을 제외하고 4자 이상 입력해주세요",result);
+    }
+
+    @Test
+    @DisplayName("비밀번호에 공백 포함")
+    void pwdValid2() {
+        // given
+        String username = "sparta";
+        String password = "123 4";
+        String repassword = "123 4";
+
+
+        SignupRequestDto signupRequestDto = new SignupRequestDto(username, password, repassword);
+
+        UserService userService = new UserService(userRepository,passwordEncoder);
+        when(userRepository.findByUsername(username))
+                .thenReturn(Optional.empty());
+
+        // when
+        String result = userService.idPasswordCheck(signupRequestDto);
+
+        // then
+        assertEquals("비밀번호는 공백을 제외하고 4자 이상 입력해주세요",result);
+    }
+
 }
